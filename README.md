@@ -1,313 +1,115 @@
 # Weather App
 
-This is a simple weather application built with React and TypeScript. The app allows users to input a city name and fetches the current weather data from the Open-Meteo API.
+A modern weather application built with React and TypeScript. Users can search for cities and view current weather details such as temperature, humidity, wind speed, and a brief description. The app supports switching between two data providers (Open‑Meteo and OpenWeather) and includes a compare mode to view multiple cities side by side.
 
-## Project Structure
+## Repository
 
+- GitHub: https://github.com/brunochc/weather-app-frontend
+
+## Features
+
+- City search with clear results display
+- Current conditions: temperature (°C), humidity (%), wind speed (km/h), description
+- Provider switch: Open‑Meteo or OpenWeather (reloads results on change)
+- Compare mode: add multiple cities to compare simultaneously
+- Responsive UI and simple, consistent UX
+- Strong TypeScript models (`WeatherData`, `ForecastDay`)
+
+## Getting Started
+
+### Prerequisites
+- Node.js 16+ (recommended) and npm or yarn
+- Git and an internet connection
+
+### Installation
+```bash
+# Clone the repo (SSH)
+git clone git@github.com:brunochc/weather-app-frontend.git
+cd weather-app
+
+# Install dependencies
+npm install
+# or
+yarn install
 ```
-weather-app
-├── src
-│   ├── api
-│   │   └── weatherService.ts       # Functions to interact with the Open-Meteo API
-│   ├── components
-│   │   ├── WeatherDisplay.tsx       # Component to display weather data
-│   │   └── CityInput.tsx           # Component for user input of city name
-│   ├── App.tsx                      # Main application component
-│   └── types
-│       └── index.ts                 # TypeScript interfaces for weather data
-├── public
-│   └── index.html                   # Main HTML file for the application
-├── package.json                     # npm configuration file
-├── tsconfig.json                    # TypeScript configuration file
-└── README.md                        # Project documentation
-```
-
-## Setup Instructions
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd weather-app
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Run the application:**
-   ```bash
-   npm start
-   ```
-
-4. **Open your browser:**
-   Navigate to `http://localhost:3000` to view the application.
 
 ## Usage
 
-- Enter the name of a city in the input field and submit the form.
-- The application will fetch and display the current weather data for the specified city.
+- Search for a city using the input field.
+- Toggle "Compare multiple" in the navbar to add more cities and compare them.
+- Switch the provider (Open‑Meteo/OpenWeather) from the navbar; results reload automatically.
+- Clear results at any time from the navbar.
 
-## API
+## Environment Variables
+Create a `.env` file at the project root (do not commit real secrets). See `.env.example` for reference.
 
-This application uses the Open-Meteo API to retrieve weather data. Ensure you have access to the API and check the documentation for any usage limits or requirements.
+```bash
+REACT_APP_PROVIDER=openweather        # or openmeteo (default)
+REACT_APP_OPENWEATHER_BASE=https://api.openweathermap.org
+# WARNING: Any REACT_APP_* variables are exposed to the browser in CRA.
+# Only use placeholder keys for local testing.
+REACT_APP_OPENWEATHER_API_KEY=__set_only_for_local_testing__
+```
+
+## How It Works
+
+- `src/App.tsx` manages global state: selected cities, results list, loading/error, provider, and compare mode. It reloads data when the provider changes.
+- `src/components/Navbar.tsx` provides controls to clear results, toggle compare mode, and switch provider.
+- `src/components/CityInput.tsx` handles city selection.
+- `src/components/WeatherList.tsx` renders multiple weather cards.
+- `src/components/WeatherDisplay.tsx` shows a city’s weather and (if present) a short multi‑day forecast using `ForecastDay`.
+- `src/api/weatherService.ts` abstracts fetching from the active provider and exposes `fetchManyWeatherData()` plus `setWeatherProvider()`.
+- `src/types/index.ts` defines `WeatherData` and `ForecastDay` used across components.
+
+## Project Structure
+```
+src/
+├── api/
+│   └── weatherService.ts      # Provider abstraction and fetch helpers
+├── components/
+│   ├── CityInput.tsx          # City selection input
+│   ├── Navbar.tsx             # Top bar controls (provider, compare, clear)
+│   ├── WeatherDisplay.tsx     # Single city weather card
+│   └── WeatherList.tsx        # List of weather cards
+├── types/
+│   └── index.ts               # Shared TypeScript models
+├── App.tsx                    # Main application component
+└── App.css                    # Styles
+```
+
+## Tech Stack
+
+- React 18, TypeScript, React Hooks
+- CSS3 / Bootstrap (for styling)
+- Open‑Meteo and OpenWeather (as providers)
+
+## Error Handling
+
+- Clear error messages when API calls fail or the network is unavailable.
+- The app remains usable when some results cannot be fetched (partial failures).
+- Input validation helps prevent invalid queries.
+
+## Future Improvements
+
+- Extended forecast (5 days) consistent across providers
+- Unit switching (°C/°F and km/h/mph)
+- Geolocation for local weather
+- Search history and recent cities
+- Dark mode and accessibility improvements
+- Automated tests (unit/integration)
+- Internationalization (i18n)
+- PWA support for offline installation
+
+## Contributing
+
+Contributions are welcome:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m "feat: add YourFeature"`
+4. Push the branch: `git push origin feature/YourFeature`
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License.
-
-🌤️ Weather App - Aplicación de Clima con React
-
-Una aplicación web moderna construida con React y TypeScript que proporciona información meteorológica en tiempo real para ciudades de todo el mundo.
-📋 Tabla de Contenidos
-
-    Características
-
-    Demo
-
-    Instalación
-
-    Uso
-
-    Estructura del Proyecto
-
-    Tecnologías Utilizadas
-
-    Manejo de Errores
-
-    Mejoras Futuras
-
-    Contribución
-
-✨ Características
-
-    Búsqueda Inteligente: Autocompletado para ciudades soportadas (Londres, Nueva York, Tokio, Sídney)
-
-    Datos Completos: Visualización de temperatura, humedad, velocidad del viento y descripción climática
-
-    Interfaz Responsive: Diseño adaptable que funciona en dispositivos móviles y desktop
-
-    Tipado Estático: Desarrollado con TypeScript para mayor robustez
-
-    Manejo de Errores: Gestión elegante de errores de API y entradas inválidas
-
-
-Sigue estos pasos para instalar y ejecutar la aplicación localmente:
-Prerrequisitos
-
-    Node.js (versión 14 o superior)
-
-    npm o yarn
-
-Pasos de instalación
-
-    Clona el repositorio:
-
-bash
-
-git clone https://github.com/tu-usuario/weather-app.git
-cd weather-app
-
-    Instala las dependencias:
-
-bash
-
-npm install
-# o
-yarn install
-
-    Inicia la aplicación en modo desarrollo:
-
-bash
-
-npm start
-# o
-yarn start
-
-    Abre tu navegador y ve a http://localhost:3000
-
-Configuración de API
-
-Para conectar con una API meteorológica real:
-
-    Crea un archivo .env en la raíz del proyecto:
-
-bash
-
-REACT_APP_WEATHER_API_KEY=tu_api_key_aqui
-REACT_APP_WEATHER_API_URL=https://api.weatherapi.com/v1
-
-    Configura el servicio de API en src/api/weatherService.ts:
-
-typescript
-
-import axios from 'axios';
-
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-const BASE_URL = process.env.REACT_APP_WEATHER_API_URL;
-
-export const fetchWeatherData = async (city: string): Promise<WeatherData> => {
-  try {
-    const response = await axios.get(
-      `${BASE_URL}/current.json?key=${API_KEY}&q=${city}&aqi=no`
-    );
-    
-    return {
-      city: response.data.location.name,
-      temperature: response.data.current.temp_c,
-      humidity: response.data.current.humidity,
-      windSpeed: response.data.current.wind_kph,
-      description: response.data.current.condition.text
-    };
-  } catch (error) {
-    throw new Error('Error fetching weather data');
-  }
-};
-
-💡 Uso
-
-    Búsqueda de Ciudad:
-
-        Escribe el nombre de una ciudad en el campo de búsqueda
-
-        Selecciona una de las sugerencias que aparecen (Londres, Nueva York, Tokio, Sídney)
-
-        Presiona "Get Weather" o Enter para buscar
-
-    Visualización de Datos:
-
-        La aplicación mostrará temperatura actual en °C
-
-        Porcentaje de humedad
-
-        Velocidad del viento en km/h
-
-        Descripción textual del clima
-
-    Búsquedas Adicionales:
-
-        Repite el proceso para consultar otras ciudades
-
-        El campo de búsqueda se limpia automáticamente después de cada consulta
-
-🏗️ Estructura del Proyecto
-text
-
-src/
-├── components/
-│   ├── CityInput.tsx          # Componente de entrada con autocompletado
-│   └── WeatherDisplay.tsx     # Componente de visualización de datos
-├── api/
-│   └── weatherService.ts      # Servicio para fetching de datos meteorológicos
-├── types/
-│   └── index.ts               # Definiciones de tipos TypeScript
-├── App.tsx                    # Componente principal de la aplicación
-├── App.css                    # Estilos principales
-└── index.tsx                  # Punto de entrada de la aplicación
-
-Descripción de Componentes
-
-    App.tsx: Componente principal que gestiona el estado global y coordina los demás componentes
-
-    CityInput.tsx: Input con funcionalidad de autocompletado y sugerencias
-
-    WeatherDisplay.tsx: Presentación de datos meteorológicos con formato
-
-    weatherService.ts: Servicio abstracto para conexión con API meteorológica
-
-🛠️ Tecnologías Utilizadas
-
-    React 18+: Biblioteca principal para la interfaz de usuario
-
-    TypeScript: Superset de JavaScript para tipado estático
-
-    React Hooks: useState para gestión de estado local
-
-    CSS3: Estilos responsive y modernos
-
-    API Meteorológica: Integración con servicios de datos climáticos
-
-⚠️ Manejo de Errores
-
-La aplicación implementa un manejo robusto de errores:
-
-    Ciudades No Soportadas:
-
-        El autocompletado solo sugiere ciudades válidas
-
-        Validación en tiempo real de entradas
-
-    Errores de API:
-
-        Mensajes de error claros para el usuario
-
-        Fallback graceful sin interrumpir la experiencia
-
-    Errores de Conexión:
-
-        Detección de problemas de red
-
-        Sugerencias para reconectar
-
-Ejemplo de manejo de errores en el código:
-typescript
-
-const handleCitySubmit = async (cityName: string) => {
-  setCity(cityName);
-  setError(null);
-  try {
-    const data = await fetchWeatherData(cityName);
-    setWeatherData(data);
-  } catch (err) {
-    setError('Error fetching weather data. Please try again.');
-    setWeatherData(null);
-  }
-};
-
-🔮 Mejoras Futuras
-
-    Ampliar Cobertura de Ciudades: Añadir más ciudades al sistema de autocompletado
-
-    Pronóstico Extendido: Implementar visualización de pronóstico a 5 días
-
-    Geolocalización: Detectar ubicación automáticamente para clima local
-
-    Unidades Personalizables: Permitir cambiar entre Celsius/Fahrenheit y km/h/mph
-
-    Modo Oscuro: Implementar toggle de tema oscuro/claro
-
-    Historial de Búsquedas: Almacenar búsquedas recientes
-
-    Tests: Añadir suite de tests unitarios y de integración
-
-    Internationalización: Soporte para múltiples idiomas
-
-    PWA: Convertir en Progressive Web App para instalación offline
-
-🤝 Contribución
-
-Las contribuciones son bienvenidas. Para contribuir:
-
-    Haz fork del proyecto
-
-    Crea una rama para tu feature (git checkout -b feature/AmazingFeature)
-
-    Commit tus cambios (git commit -m 'Add some AmazingFeature')
-
-    Push a la rama (git push origin feature/AmazingFeature)
-
-    Abre un Pull Request
-
-📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo LICENSE para más detalles.
-👥 Autores
-
-    Tu Nombre - @tu-usuario
-
-🙏 Agradecimientos
-
-    Open-Meteo por proporcionar API meteorológica gratuita
-
-    Comunidad de React y TypeScript por recursos y documentación
-
+MIT License.
