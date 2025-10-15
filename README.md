@@ -91,12 +91,6 @@ Una aplicación web moderna construida con React y TypeScript que proporciona in
 
     Manejo de Errores: Gestión elegante de errores de API y entradas inválidas
 
-🎥 Demo
-
-https://via.placeholder.com/800x400?text=Captura+de+la+Weather+App
-
-Nota: Agregar captura real de la aplicación al implementar
-🚀 Instalación
 
 Sigue estos pasos para instalar y ejecutar la aplicación localmente:
 Prerrequisitos
